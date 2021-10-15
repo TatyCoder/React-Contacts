@@ -1,26 +1,40 @@
-import Card from '../UI/Card';
-import styles from './AddContact.module.css';
+import { useState } from 'react';
+import styles from './AddContact.module.css'
+import ContactForm from './ContactForm';
 
 const AddContact = (props) => {
+  const [isEditing, setIsEditing] = useState(false);
+
+  const saveContactDataHandler = (enteredContactData) => {
+    const contactData = {
+      ...enteredContactData,
+      id: Math.random().toString(),
+    };
+
+    props.onAddContact(contactData);
+    setIsEditing(false);
+  };
+
+  const startEditingHandler = () => {
+    setIsEditing(true);
+  };
+
+  const stopEditingHandler = () => {
+    setIsEditing(false);
+  };
+
   return (
-    <Card className={styles.input}>
-      <div>
-        <form className={styles.form}>
-          <label htmlFor="name">Name</label>
-          <input id="name" type="text" />
-          <label htmlFor="street">Street</label>
-          <input id="street" type="text" />
-          <label htmlFor="city">City</label>
-          <input id="city" type="text" />
-          <label htmlFor="state">State</label>
-          <input id="state" type="text" />
-          <label htmlFor="zip">Zip Code</label>
-          <input id="zip" type="number" />
-          <label htmlFor="phone">Phone</label>
-          <input id="phone" type="number" />
-        </form>
-      </div>
-    </Card>
+    <div>
+      {!isEditing && (
+        <button className={styles.button} onClick={startEditingHandler}>Add New Contact</button>
+      )}
+      {isEditing && (
+        <ContactForm 
+          onSaveContactData={saveContactDataHandler}
+          onCancel={stopEditingHandler}
+        />
+      )}
+    </div>
   );
 };
 

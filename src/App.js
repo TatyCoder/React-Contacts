@@ -43,6 +43,13 @@ const contacts = [
 function App() {
   const [contactsList, setContactsList] = useState(contacts);
 
+  const addContactHandler = contact => {
+    setContactsList(prevContacts => {
+      return [contact, ...prevContacts]
+    });
+    console.log(contact);
+  };
+
   const deleteContactHandler = (event) => {
     const newList = contacts.filter((c) => c.id.toString() !== event.target.id);
     // Optional way:
@@ -62,8 +69,8 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
       </header>
       <h2 className="App-h2">Contacts</h2>
-      <AddContact />
-      <ContactsList contacts={contactsList} onDelete={deleteContactHandler} />
+      <AddContact onAddContact={addContactHandler}/>
+      <ContactsList contacts={contactsList} onDeleteContact={deleteContactHandler} />
     </div>
   );
 }

@@ -12,7 +12,7 @@ const ContactsList = (props) => {
             <button
               id={contacts.id}
               className={styles.button}
-              onClick={props.onDelete}
+              onClick={props.onDeleteContact}
             >
               Delete
             </button>
