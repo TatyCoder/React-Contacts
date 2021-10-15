@@ -51,16 +51,10 @@ function App() {
   };
 
   const deleteContactHandler = (event) => {
-    const newList = contacts.filter((c) => c.id.toString() !== event.target.id);
-    // Optional way:
-    // const newList = [];
-    // for (let c = 0; c < contacts.length; c++) {
-    //   if (contacts[c].id.toString() !== event.target.id) {
-    //     newList.push(contacts[c]);
-    //   }
-    // }
-    console.log(newList);
-    setContactsList(newList);
+    setContactsList(prevContacts => {
+      const updatedList = prevContacts.filter(contact => contact.id.toString() !== event.target.id);
+      setContactsList(updatedList);
+    });
   };
   
   return (
