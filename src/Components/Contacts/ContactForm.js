@@ -3,12 +3,12 @@ import styles from './ContactForm.module.css';
 import { useState } from 'react';
 
 const ContactForm = (props) => {
-  const [enteredName, setEnteredName] = useState('');
-  const [enteredStreet, setEnteredStreet] = useState('');
-  const [enteredCity, setEnteredCity] = useState('');
-  const [enteredState, setEnteredState] = useState('');
-  const [enteredZip, setEnteredZip] = useState('');
-  const [enteredPhone, setEnteredPhone] = useState('');
+  const [enteredName, setEnteredName] = useState(props.contactToEdit.name);
+  const [enteredStreet, setEnteredStreet] = useState(props.contactToEdit.address.street);
+  const [enteredCity, setEnteredCity] = useState(props.contactToEdit.address.city);
+  const [enteredState, setEnteredState] = useState(props.contactToEdit.address.state);
+  const [enteredZip, setEnteredZip] = useState(+props.contactToEdit.address.zip);
+  const [enteredPhone, setEnteredPhone] = useState(+props.contactToEdit.phone);
 
   const nameChangeHandler = (event) => {
     setEnteredName(event.target.value);
@@ -39,11 +39,13 @@ const ContactForm = (props) => {
 
     const contactData = {
       name: enteredName,
+      address: {
       street: enteredStreet,
       city: enteredCity,
       state: enteredState,
-      zip: +enteredZip,
-      phone: +enteredPhone
+      zip: enteredZip.toString()
+      },
+      phone: enteredPhone.toString()
     };
 
     console.log(contactData);

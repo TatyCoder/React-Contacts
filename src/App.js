@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import { useState } from 'react';
 import AddContact from './Components/Contacts/AddContact';
+import EditContact from './Components/Contacts/EditContact';
 import ContactsList from './Components/Contacts/ContactsList';
 
 const contacts = [
@@ -12,9 +13,9 @@ const contacts = [
       street: 'Street1',
       city: 'City1',
       state: 'State1',
-      zip: 'Zip1',
+      zip: '11',
     },
-    phone: 'Phone1',
+    phone: '11'
   },
   {
     id: 2,
@@ -23,9 +24,9 @@ const contacts = [
       street: 'Street2',
       city: 'City2',
       state: 'State2',
-      zip: 'Zip2',
+      zip: '22'
     },
-    phone: 'Phone2',
+    phone: '22'
   },
   {
     id: 3,
@@ -34,14 +35,15 @@ const contacts = [
       street: 'Street3',
       city: 'City3',
       state: 'State3',
-      zip: 'Zip3',
+      zip: '33'
     },
-    phone: 'Phone3',
+    phone: '33'
   },
 ];
 
 function App() {
   const [contactsList, setContactsList] = useState(contacts);
+  const [contactToEdit, setContactToEdit] = useState(null);
 
   const addContactHandler = contact => {
     setContactsList(prevContacts => {
@@ -56,6 +58,14 @@ function App() {
       setContactsList(updatedList);
     });
   };
+
+  const saveContactHandler = (event) => {
+  }
+
+  const editContactHandler = (event) => {
+    const itemToEdit = contactsList.filter(contact => contact.id.toString() === event.target.id);
+    setContactToEdit(itemToEdit[0]);
+  };
   
   return (
     <div className="App">
@@ -63,10 +73,17 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
       </header>
       <h2 className="App-h2">Contacts</h2>
-      <AddContact onAddContact={addContactHandler}/>
-      <ContactsList contacts={contactsList} onDeleteContact={deleteContactHandler} />
+      {contactToEdit !== null && (
+        <EditContact onSaveContact={saveContactHandler} contactToEditObj={contactToEdit} />
+      )}
+      {contactToEdit === null && (
+        <div>
+          <AddContact onAddContact={addContactHandler} />
+          <ContactsList contacts={contactsList} onDeleteContact={deleteContactHandler} onEditContact={editContactHandler} />
+       </div>
+      )}
     </div>
   );
-}
+};
 
 export default App;

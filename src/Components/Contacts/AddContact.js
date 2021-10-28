@@ -2,36 +2,48 @@ import { useState } from 'react';
 import styles from './AddContact.module.css'
 import ContactForm from './ContactForm';
 
+const emptyContact =   {
+  name: '',
+  address: {
+    street: '',
+    city: '',
+    state: '',
+    zip: ''
+  },
+  phone: ''
+}
+
 const AddContact = (props) => {
-  const [isEditing, setIsEditing] = useState(false);
+  const [isAdding, setIsAdding] = useState(false);
 
   const saveContactDataHandler = (enteredContactData) => {
     const contactData = {
       ...enteredContactData,
-      id: Math.random().toString(),
+      id: Math.random().toString()
     };
 
     props.onAddContact(contactData);
-    setIsEditing(false);
+    setIsAdding(false);
   };
 
-  const startEditingHandler = () => {
-    setIsEditing(true);
+  const startAddingHandler = () => {
+    setIsAdding(true);
   };
 
-  const stopEditingHandler = () => {
-    setIsEditing(false);
+  const stopAddingHandler = () => {
+    setIsAdding(false);
   };
 
   return (
     <div>
-      {!isEditing && (
-        <button className={styles.button} onClick={startEditingHandler}>Add New Contact</button>
+      {!isAdding && (
+        <button className={styles.button} onClick={startAddingHandler}>Add New Contact</button>
       )}
-      {isEditing && (
+      {isAdding && (
         <ContactForm 
           onSaveContactData={saveContactDataHandler}
-          onCancel={stopEditingHandler}
+          onCancel={stopAddingHandler}
+          contactToEdit={emptyContact}
         />
       )}
     </div>

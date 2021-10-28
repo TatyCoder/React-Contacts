@@ -16,6 +16,13 @@ const ContactsList = (props) => {
             >
               Delete
             </button>
+            <button
+              id={contacts.id}
+              className={styles.button}
+              onClick={props.onEditContact}
+            >
+              Edit
+            </button>
           </li>
         ))}
       </ul>
