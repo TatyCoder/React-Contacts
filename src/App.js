@@ -44,6 +44,7 @@ const contacts = [
 function App() {
   const [contactsList, setContactsList] = useState(contacts);
   const [contactToEdit, setContactToEdit] = useState(null);
+  const [hideList, setHideList] = useState(false);
 
   const addContactHandler = contact => {
     setContactsList(prevContacts => {
@@ -66,6 +67,10 @@ function App() {
     const itemToEdit = contactsList.filter(contact => contact.id.toString() === event.target.id);
     setContactToEdit(itemToEdit[0]);
   };
+
+  const hideContactsListHandler = (hide) => {
+    setHideList(hide);
+  };
   
   return (
     <div className="App">
@@ -76,10 +81,17 @@ function App() {
       {contactToEdit !== null && (
         <EditContact onSaveContact={saveContactHandler} contactToEditObj={contactToEdit} />
       )}
+      
       {contactToEdit === null && (
         <div>
-          <AddContact onAddContact={addContactHandler} />
-          <ContactsList contacts={contactsList} onDeleteContact={deleteContactHandler} onEditContact={editContactHandler} />
+          <AddContact onAddContact={addContactHandler} onHideContactsList={hideContactsListHandler} />
+          {hideList === false && (         
+          <ContactsList 
+            contacts={contactsList} 
+            onDeleteContact={deleteContactHandler} 
+            onEditContact={editContactHandler} 
+          />
+          )}
        </div>
       )}
     </div>

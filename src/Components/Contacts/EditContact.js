@@ -7,7 +7,6 @@ const EditContact = (props) => {
   const saveContactDataHandler = (enteredContactData) => {
     const contactData = {
       ...enteredContactData,
-      id: Math.random().toString(),
     };
 
     props.onEditContact(contactData);
@@ -15,7 +14,7 @@ const EditContact = (props) => {
 
 
   const stopEditingHandler = () => {
-//    setIsEditing(false);
+   
   };
 
   return (

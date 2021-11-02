@@ -24,13 +24,16 @@ const AddContact = (props) => {
 
     props.onAddContact(contactData);
     setIsAdding(false);
+    props.onHideContactsList(false);
   };
 
   const startAddingHandler = () => {
+    props.onHideContactsList(true);
     setIsAdding(true);
   };
 
   const stopAddingHandler = () => {
+    props.onHideContactsList(false);
     setIsAdding(false);
   };
 
