@@ -38,6 +38,7 @@ const ContactForm = (props) => {
     event.preventDefault();
 
     const contactData = {
+      id: props.contactToEdit.id,
       name: enteredName,
       address: {
       street: enteredStreet,

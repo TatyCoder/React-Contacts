@@ -7,7 +7,7 @@ import ContactsList from './Components/Contacts/ContactsList';
 
 const contacts = [
   {
-    id: 1,
+    id: '1',
     name: 'Name1',
     address: {
       street: 'Street1',
@@ -18,7 +18,7 @@ const contacts = [
     phone: '11'
   },
   {
-    id: 2,
+    id: '2',
     name: 'Name2',
     address: {
       street: 'Street2',
@@ -29,7 +29,7 @@ const contacts = [
     phone: '22'
   },
   {
-    id: 3,
+    id: '3',
     name: 'Name3',
     address: {
       street: 'Street3',
@@ -55,22 +55,26 @@ function App() {
 
   const deleteContactHandler = (event) => {
     setContactsList(prevContacts => {
-      const updatedList = prevContacts.filter(contact => contact.id.toString() !== event.target.id);
+      const updatedList = prevContacts.filter(contact => contact.id !== event.target.id);
       setContactsList(updatedList);
     });
   };
 
-  const saveContactHandler = (event) => {
-  }
-
   const editContactHandler = (event) => {
-    const itemToEdit = contactsList.filter(contact => contact.id.toString() === event.target.id);
+    const itemToEdit = contactsList.filter(contact => contact.id === event.target.id);
     setContactToEdit(itemToEdit[0]);
   };
 
-  const hideContactsListHandler = (hide) => {
-    setHideList(hide);
-  };
+  const saveEditedContactHandler = (contact) => {
+    const updatedContacts = contactsList.filter(c => c.id !== contact.id);
+    updatedContacts.push(contact);
+    console.log(updatedContacts);
+    setContactsList(updatedContacts);
+  } 
+
+  // const hideContactsListHandler = (hide) => {
+  //   setHideList(hide);
+  // };
   
   return (
     <div className="App">
@@ -79,12 +83,19 @@ function App() {
       </header>
       <h2 className="App-h2">Contacts</h2>
       {contactToEdit !== null && (
-        <EditContact onSaveContact={saveContactHandler} contactToEditObj={contactToEdit} />
+        <EditContact 
+          onSaveContact={saveEditedContactHandler} 
+          contactToEditObj={contactToEdit} 
+          onHideContactsList={()=>setContactToEdit(null)} 
+        />
       )}
-      
+
       {contactToEdit === null && (
         <div>
-          <AddContact onAddContact={addContactHandler} onHideContactsList={hideContactsListHandler} />
+          <AddContact 
+            onAddContact={addContactHandler} 
+            onHideContactsList={(hide)=>setHideList(hide)} 
+          />
           {hideList === false && (         
           <ContactsList 
             contacts={contactsList} 
